@@ -30,16 +30,16 @@
               <div class="swiper-wrapper align-items-center">
 
                 <div class="swiper-slide">
-                  <img src="{% static 'img/portfolio/portfolio-details-1.jpg'%}" alt="صورة هنا">
+                  <img src="{{ MEDIA_URL }}{{product.image.url}}" alt="صورة هنا">
                 </div>
 
-                <div class="swiper-slide">
+                <!-- <div class="swiper-slide">
                   <img src="{% static 'img/portfolio/portfolio-details-2.jpg'%}" alt="صورة هنا">
                 </div>
 
                 <div class="swiper-slide">
                   <img src="{% static 'img/portfolio/portfolio-details-3.jpg'%}" alt="صورة هنا">
-                </div>
+                </div> -->
 
               </div>
               <div class="swiper-pagination"></div>
@@ -50,16 +50,17 @@
             <div class="portfolio-info">
               <h3>وصف المنتج</h3>
               <ul>
-                <li><strong>الصنف</strong>: ادوات تجميل</li>
-                <li><strong>الاسم </strong>: مناكير</li>
-                <li><strong>تاريخ البيع</strong>: 01 March, 2020</li>
+                <li><strong>الصنف</strong>: {{Category.category_name}}</li>
+                <li><strong>الاسم </strong>: {{product.name}}</li>
+                <li><strong>السعر </strong>: {{product.price}} ر.ي</li>
+
                 <li><strong>شراء المنتج</strong>: <a href="#">اضف للسلة</a></li>
               </ul>
             </div>
             <div class="portfolio-description">
-              <h2>هذا مثال عن المنتج</h2>
+              <h2></h2>
               <p>
-              بسم الله الرحمن الرحيم والحمدلله على نعمه الواسعة والصلاة والسلام على اشرف الخلق والمرسلين محمد بن عبدالله الصادق الامين وصحبه ومن والاه الى يوم الدين ثم اما بعد
+              {{product.description}}
               </p>
             </div>
           </div>

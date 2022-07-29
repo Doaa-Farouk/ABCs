@@ -24,5 +24,8 @@ def add_product(request):
     return render(request, 'core/add_product.html', {'form':form})
 
 
-def product_details(request):
-    return render(request, 'core/product_details.html')
+def product_details(request,pk):
+    product= Product.objects.get(pk=pk)
+    # category= Category.objects.get(pk=pk)
+    return render(request, 'core/product_details.html',{'product':product}#,{'category':category}
+                  )

@@ -37,13 +37,13 @@
                 <div class="portfolio-wrap">
                   <img src="{{ MEDIA_URL }}{{product.image.url}}" class="img-fluid" alt="This is pic">
                   <div class="portfolio-info">
-                    <a href="{% url 'product_details'%}"><h4>{{product.name}}</h4></a>
+                    <a href="{% url 'product_details' product.pk%}"><h4>{{product.name}}</h4></a>
                    
                   </div>
                 </div>
                 <div class="desc">
                   <span class="price">{{product.price}} ر.ي</span>
-                  <a class="add_to_cart" href="#">+</a>
+                  <a class="add_to_cart" href="#"><i class="bi bi-cart"></i></a>
                 </div>
               </div>
                 {% endfor %}
