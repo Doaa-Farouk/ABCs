@@ -54,7 +54,7 @@
                 <li><strong>الاسم </strong>: {{product.name}}</li>
                 <li><strong>السعر </strong>: {{product.price}} ر.ي</li>
 
-                <li><strong>شراء المنتج</strong>: <a href="#">اضف للسلة</a></li>
+                <li><strong>شراء المنتج</strong>: <a href="{% url 'add_to_cart' product.pk%}">اضف للسلة</a></li>
               </ul>
             </div>
             <div class="portfolio-description">

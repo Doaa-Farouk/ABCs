@@ -43,7 +43,7 @@
                 </div>
                 <div class="desc">
                   <span class="price">{{product.price}} ر.ي</span>
-                  <a class="add_to_cart" href="#"><i class="bi bi-cart"></i></a>
+                  <a class="add_to_cart" href="{% url 'add_to_cart' product.pk%}"><i class="bi bi-cart"></i></a>
                 </div>
               </div>
                 {% endfor %}
