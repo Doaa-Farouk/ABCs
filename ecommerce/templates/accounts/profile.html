@@ -1,0 +1,47 @@
+{% extends 'core/hf.html'%}
+{%load static%}
+{% block profile%}
+
+<div class="profile" dir="rtl">
+    <figure>
+      <img src="//s3-us-west-2.amazonaws.com/s.cdpn.io/55758/random-user-31.jpg" alt="" />
+    </figure>
+    <header>
+      <h1>أهلاً بك يا{{user.username}}</h1>
+    </header>
+    
+    <div class="toggle">
+      <input type="checkbox" class="view_details" id="view_details">
+      <!-- <label for="view_details" title="tap here to view full profile">☰</label>     -->
+    </div>
+    <main>
+        
+      <dl>
+        <dt>اسم المستخدم</dt>
+          <dd>{{user.username}}</dd>
+        <dt>تاريخ الانضمام</dt>
+          <dd>{{user.date_joined}}</dd>
+        <dt>المدينة</dt>
+          <dd>{{user.customer.city}}</dd>
+        <dt>العنوان</dt>
+          <dd>{{user.customer.address}}</dd>
+        <dt>البريد الالكتروني</dt>
+          <dd>{{user.email}}</dd>
+        <dt>رقم التلفون</dt>
+          <dd>{{user.customer.phone}}</dd>
+        <dt></dt>
+          <dd>
+            <a href="{% url 'orderlist'%}">سلتي<i class="bi bi-cart"></i></a>
+          </dd>
+      </dl>
+      {% if user.is_superuser %}
+      <button> <a href="{% url 'add_product'%}"> إضافة منتج</a></button>
+      {%endif%}
+    </main>
+  
+  </div> <!-- end profile -->
+  
+ 
+
+{% endblock profile%}
+

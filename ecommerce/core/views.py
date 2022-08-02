@@ -6,13 +6,17 @@ from django.utils import timezone
 
 # Create your views here.
 def index(request):
-    products = Product.objects.all()[:6]
+    products = Product.objects.all()[:30]
     categories = Category.objects.all()
     
     return render(request, 'core/index.html',{'products': products,
                                               'categories':categories})
 
-
+def profile(request,username):
+    user= User.objects.get(username=username)
+    return render(request,'accounts/profile.html',{'user':user})
+  
+        
 
 def add_product(request):
     if request.method == 'POST':
@@ -65,4 +69,9 @@ def add_to_cart(request,pk):
         order.items.add(order_item)
         messages.info(request, 'تم إضافة المنتج')
         return redirect('product_details',pk=pk)
-        
+
+def orderlist(request):
+    if Order.objects.filter(user=request.user, ordered=False).exists():
+        order = Order.objects.get(user=request.user, ordered=False)
+        return render(request, "core/orderlist.html", {"order": order})
+    return render(request, "core/orderlist.html", {"message": "Your Cart is Empty"})

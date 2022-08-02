@@ -45,7 +45,7 @@
 
         <nav id="navbar" class="navbar">
           <ul>
-            <li><a class="nav-link scrollto active" href="#hero">الرئيسية </a></li>
+            <li><a class="nav-link scrollto active" href="{% url 'index'%}">الرئيسية </a></li>
             <li><a class="nav-link scrollto" href="#about">خدماتنا</a></li>
             <li><a class="nav-link scrollto" href="#services">من نحن</a></li>
             <!-- <li><a class="nav-link scrollto " href="#portfolio"></a></li> -->
@@ -62,7 +62,7 @@
               </ul>
             </li>
             {% if user.is_authenticated %}
-            <li><a class="nav-link scrollto" href="#">حسابي</a></li>
+            <li><a class="nav-link scrollto" href="{% url 'profile' user.username %}">حسابي</a></li>
             <li><a class="nav-link scrollto" href="#contact">تواصل معنا</a></li>
             <li><a class="getstarted scrollto" href="{% url 'user_logout' %}">تسجيل خروج</a></li>
             {% else %}
@@ -81,6 +81,8 @@
   {% endblock details%}
   {% block profile%}
   {% endblock profile%}
+  {% block orderlist%}
+  {% endblock orderlist%}
 
   <footer id="footer">
 

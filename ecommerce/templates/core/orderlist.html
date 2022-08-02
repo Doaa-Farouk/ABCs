@@ -1,0 +1,38 @@
+{% extends 'core/hf.html'%}
+{%load static%}
+{% block orderlist%}
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">الصورة</th>
+        <th scope="col">اسم المنتج</th>
+        <th scope="col">السعر</th>
+        <th scope="col">الكمية</th>
+        <th scope="col">اجمالي السعر</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for order_item in order.items.all %}
+      <tr>
+        <th scope="row"></th>
+        <td>{{order_item.product.image.url}}</td>
+        <td>{{order_item.product.name}}</td>
+        <td>{{order_item.product.price}} ر.ي</td>
+        <td>{{order_item.quantity}}</td>
+        <td>{{order_item.item_total_price}} ر.ي</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+  
+{% endblock orderlist%}

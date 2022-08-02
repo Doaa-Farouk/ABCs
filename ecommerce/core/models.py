@@ -10,13 +10,8 @@ from django.dispatch import receiver
 class Customer(models.Model):
     user = models.OneToOneField(User, null=False, on_delete=models.CASCADE, blank=False)
     phone = models.CharField(max_length= 12)
-    CITIES= (
-        ('1','Sanaa'),
-        ('2','Taiz'),
-        ('3','Ibb') ,
-        ('4','Aden')
-        )
-    city = models.CharField(max_length=20, choices = CITIES)
+    city = models.CharField(max_length=20)
+    address= models.CharField(max_length=200,default='صنعاء')
     
     
     
@@ -56,7 +51,7 @@ class OrderItem(models.Model):
     
     def final_price(self):
         return self.item_total_price()
-        
+
     
 class Order(models.Model):
     user= models.ForeignKey(User, on_delete=models.CASCADE, null=False , blank=False)
