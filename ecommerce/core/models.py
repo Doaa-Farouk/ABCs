@@ -1,5 +1,4 @@
 from audioop import reverse
-from tkinter.messagebox import NO
 from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
@@ -8,11 +7,12 @@ from django.dispatch import receiver
 # Create your models here.
 
 class Customer(models.Model):
-    user = models.OneToOneField(User, null=False, on_delete=models.CASCADE, blank=False)
-    phone = models.CharField(max_length= 12)
-    city = models.CharField(max_length=20)
-    address= models.CharField(max_length=200,default='صنعاء')
-    
+    user= models.OneToOneField(User, null=False, on_delete=models.CASCADE, blank=False)
+    phone= models.CharField(max_length= 12)
+    country= models.CharField(max_length=30)
+    city= models.CharField(max_length=30)
+    address= models.CharField(max_length=200, null=True)
+    specific_address= models.CharField(max_length=200, null=True)
     
     
 class Category(models.Model):
@@ -21,6 +21,8 @@ class Category(models.Model):
     def __str__(self):
         return self.category_name
     
+class Pictuers(models.Model):
+    pass
     
 class Product(models.Model):
     name= models.CharField(max_length=300,verbose_name='اسم المنتج')
@@ -76,12 +78,11 @@ class Order(models.Model):
     def total_price(self):
         total=0
         for order_item in self.items.all():
-            total= order_item.final_price()
+            total += order_item.final_price()
         return total
     
     def total_count(self):
         order= Order.objects.get(pk=self.pk)
         return order.items.count()
 
-        
     

@@ -46,23 +46,14 @@
         <nav id="navbar" class="navbar">
           <ul>
             <li><a class="nav-link scrollto active" href="{% url 'index'%}">الرئيسية </a></li>
-            <li><a class="nav-link scrollto" href="#about">خدماتنا</a></li>
-            <li><a class="nav-link scrollto" href="#services">من نحن</a></li>
-            <!-- <li><a class="nav-link scrollto " href="#portfolio"></a></li> -->
-            <li class="dropdown"><a href="#"><span>الفئات</span> <i class="bi bi-chevron-down"></i></a>
-              <ul>
-                {% for category in categories %}
-                <li><a href="#">{{category.category_name}}</a></li>
-                <!-- <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                  <ul>
-                    <li><a href="#">Deep Drop Down 1</a></li>
-                  </ul>
-                </li> -->
-                {%endfor%}
+            {% for category in categories %}
+              <li><a class="nav-link scrollto" href="#">{{category.category_name}}</a></li>
+            {%endfor%}
               </ul>
+              <ul>
             </li>
             {% if user.is_authenticated %}
-            <li><a class="nav-link scrollto" href="{% url 'profile' user.username %}">حسابي</a></li>
+            <li><a class="nav-link scrollto" href="{% url 'profile' user.username %}"><i class="bi bi-person-circle"></i></a></li>
             <li><a class="nav-link scrollto" href="#contact">تواصل معنا</a></li>
             <li><a class="getstarted scrollto" href="{% url 'user_logout' %}">تسجيل خروج</a></li>
             {% else %}

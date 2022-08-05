@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from core.forms import *
 from core.models import *
 from django.utils import timezone
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def index(request):
@@ -75,3 +76,59 @@ def orderlist(request):
         order = Order.objects.get(user=request.user, ordered=False)
         return render(request, "core/orderlist.html", {"order": order})
     return render(request, "core/orderlist.html", {"message": "Your Cart is Empty"})
+
+
+
+def add_item(request,pk):
+    product= Product.objects.get(pk=pk)
+    order_item, created= OrderItem.objects.get_or_create(
+        product= product,
+        user = request.user,
+        ordered= False 
+    )
+    # order_query set
+    order_qs= Order.objects.filter(user=request.user, ordered=False)
+    if order_qs.exists():
+        order= order_qs[0]
+        if order.items.filter(product__pk= pk).exists():
+            if order_item.quantity < product.count:
+                order_item.quantity += 1
+                order_item.save()
+                return redirect('orderlist')
+            else:
+                messages.info(request, 'لقد نفذت الكمية')
+                return redirect("orderlist")
+        else:
+            order.items.add(order_item)
+            messages.info(request, 'تم إضافة المنتج')
+            return redirect('orderlist')
+        
+    else:
+        order_date= timezone.now()
+        order= Order.objects.create(user= request.user, order_date=order_date)
+        order.items.add(order_item)
+        messages.info(request, 'تم إضافة المنتج')
+        return redirect('orderlist')
+    
+    
+def remove_item(request, pk):
+    item = get_object_or_404(Product, pk=pk)
+    order_qs= Order.objects.filter(user= request.user, ordered= False)
+    if order_qs.exists():
+        order= order_qs[0]
+        if order.items.filter(product__pk=pk).exists():
+            order_item= OrderItem.objects.filter(
+                product= item,
+                user= request.user,
+                ordered= False
+            )[0]
+            if order_item.quantity > 1:
+                order_item.quantity -=1
+                order_item.save()
+            else:
+                order_item.delete()
+            return redirect('orderlist')
+        else:
+            return redirect("orderlist")
+    else:
+        return redirect("orderlist")
