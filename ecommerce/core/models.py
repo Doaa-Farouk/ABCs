@@ -8,11 +8,20 @@ from django.dispatch import receiver
 
 class Customer(models.Model):
     user= models.OneToOneField(User, null=False, on_delete=models.CASCADE, blank=False)
+    
+    def __str__(self):
+        return self.user.username
+    
+class CheckoutDetails(models.Model):
+    user= models.ForeignKey(User,on_delete=models.CASCADE, null=True)
     phone= models.CharField(max_length= 12)
     country= models.CharField(max_length=30)
     city= models.CharField(max_length=30)
-    address= models.CharField(max_length=200, null=True)
-    specific_address= models.CharField(max_length=200, null=True)
+    address= models.CharField(max_length=200)
+    specific_address= models.CharField(max_length=200)
+    
+    def __str__(self):
+        return self.user.username
     
     
 class Category(models.Model):
@@ -84,5 +93,3 @@ class Order(models.Model):
     def total_count(self):
         order= Order.objects.get(pk=self.pk)
         return order.items.count()
-
-    

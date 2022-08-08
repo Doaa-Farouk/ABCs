@@ -132,3 +132,40 @@ def remove_item(request, pk):
             return redirect("orderlist")
     else:
         return redirect("orderlist")
+    
+    
+    
+def checkout(request):
+    if CheckoutDetails.objects.filter(user=request.user).exists():
+        return render(request, 'core/checkout.html')
+    
+    if request.method == 'POST':
+        form= CheckoutForm(request.POST)
+        if form.is_valid():
+            phone = form.cleaned_data.get('phone')
+            country= form.cleaned_data.get('country')
+            city= form.cleaned_data.get('city')
+            address= form.cleaned_data.get('address')
+            specific_address= form.cleaned_data.get('specific_address')
+            
+            checkoutdetails= CheckoutDetails(
+                user= request.user,
+                phone= phone,
+                country= country,
+                city= city,
+                address= address,
+                specific_address= specific_address
+            )
+            checkoutdetails.save()
+            form= CheckoutForm()
+            return render(request,'core/checkout.html',{'form':form})
+        else:
+            messages.info(request, 'failed')
+            form= CheckoutForm()
+            return render(request,'core/checkout.html',{'form':form})
+    else:
+        form= CheckoutForm()
+        return render(request,'core/checkout.html',{'form':form})
+    
+    # what does valid form mean 
+    # what are the standards

@@ -28,8 +28,6 @@ def user_register(request):
         password = request.POST.get('password')
         c_password = request.POST.get('c_password')
         email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        city = request.POST.get('city')
         
         if password == c_password:
             if User.objects.filter(username= username).exists():
@@ -41,7 +39,7 @@ def user_register(request):
             else:
                 user = User.objects.create_user(username= username,email= email,password = password)                
                 user.save()                    
-                data = Customer(user= user, phone=phone, city= city)
+                data = Customer(user= user)
                 data.save()
                 
                 # login code
