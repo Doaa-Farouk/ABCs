@@ -1,3 +1,4 @@
+import email
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -25,6 +26,9 @@ def user_login(request):
 def user_register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        # username= first_name + last_name
         password = request.POST.get('password')
         c_password = request.POST.get('c_password')
         email = request.POST.get('email')
@@ -37,16 +41,13 @@ def user_register(request):
                 messages.info(request, 'البريد الالكتروني موجود مسبقاً')
                 return redirect('user_register') 
             else:
-                user = User.objects.create_user(username= username,email= email,password = password)                
+                user = User.objects.create_user(username= username,email= email,password = password, first_name= first_name, last_name= last_name)                
                 user.save()                    
-                data = Customer(user= user)
-                data.save()
                 
                 # login code
                 logged_user = authenticate(username=username, password=password)
                 if logged_user is not None:
                     login(request, logged_user)
-                    # should be redirected to profile page
                     return redirect('/')
                 
         else:

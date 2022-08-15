@@ -21,21 +21,21 @@
           <dd>{{user.username}}</dd>
         <dt>تاريخ الانضمام</dt>
           <dd>{{user.date_joined}}</dd>
-        <dt>المدينة</dt>
-          <dd>{{user.customer.city}}</dd>
-        <dt>العنوان</dt>
-          <dd>{{user.customer.address}}</dd>
         <dt>البريد الالكتروني</dt>
           <dd>{{user.email}}</dd>
-        <dt>رقم التلفون</dt>
-          <dd>{{user.customer.phone}}</dd>
-        <dt></dt>
+        <dt>الاسم الاول</dt>
+        <dd>{{user.first_name}}</dd>
+        <dt>الاسم الاخير</dt>
+        <dd>{{user.last_name}}</dd>
           <dd>
             <a href="{% url 'orderlist'%}">سلتي<i class="bi bi-cart"></i></a>
           </dd>
       </dl>
       {% if user.is_superuser %}
+      كمية كل منتج 
+      
       <button> <a href="{% url 'add_product'%}"> إضافة منتج</a></button>
+      <button> <a href="{% url 'add_category'%}"> إضافة قسم</a></button>
       {%endif%}
     </main>
   

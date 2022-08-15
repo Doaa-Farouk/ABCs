@@ -10,7 +10,9 @@
     <form action="" method="POST">
         {% csrf_token %}
         {{form.as_p}}
-       <button type="submit">تأكيد الطلب</button>
+       <!-- <button type="submit">تأكيد الطلب</button> -->
+       <input name="checkout" id="checkout" class="" type="submit" value="Checkout">
+          
     </form>
 </body>
 </html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for o in order %}
+        <p>{{o.user}}</p>
+
+            {% for item in o.items.all %}
+                <p>{{item.product.name}}</p>
+                <p>{{item.quantity}}</p>
+            {%endfor%}
+
+            <p>{{o.order_date}}</p> 
+            <!-- <p>===================================</p> -->
+
+            
+            {% for detail in checkout_detail %}
+                <p>id{{detail.user.id}}</p>
+                <p>{{detail.phone}}</p>
+                <p>{{detail.city}}</p>
+                <p>{{detail.country}}</p>
+                <p>{{detail.address}}</p>
+                <p>{{detail.specific_address}}</p>
+            {%endfor%}
+
+        <p>===================================</p>
+        {%endfor%}
+</body>
+</html>

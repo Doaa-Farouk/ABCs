@@ -4,6 +4,7 @@ from core.forms import *
 from core.models import *
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -41,7 +42,7 @@ def product_details(request,pk):
                   )
     
     
-    
+@login_required(login_url='/accounts/ulogin/')   
 def add_to_cart(request,pk):
     product= Product.objects.get(pk=pk)
     order_item, created= OrderItem.objects.get_or_create(
@@ -60,7 +61,6 @@ def add_to_cart(request,pk):
         
         else:
             order.items.add(order_item)
-            # order_item.save()
             messages.info(request, 'تم إضافة المنتج')
             return redirect('product_details',pk=pk)
         
@@ -137,6 +137,8 @@ def remove_item(request, pk):
     
 def checkout(request):
     if CheckoutDetails.objects.filter(user=request.user).exists():
+        # do this functionality when frontend is ready
+        # messages.info(request,'do you want to use last details or you want to update them?')
         return render(request, 'core/checkout.html')
     
     if request.method == 'POST':
@@ -157,7 +159,12 @@ def checkout(request):
                 specific_address= specific_address
             )
             checkoutdetails.save()
+            # order= Order.objects.filter(user= request.user)
+            # order.ordered= True
             form= CheckoutForm()
+            # print('coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool')
+            # this is working
+            messages.info(request, 'تم تأكيد الطلب بنجاح, سيتم توصيل الطلب إلى العنوان الذي قمت بإدخاله')
             return render(request,'core/checkout.html',{'form':form})
         else:
             messages.info(request, 'failed')
@@ -169,3 +176,13 @@ def checkout(request):
     
     # what does valid form mean 
     # what are the standards
+
+
+def customers_orders(request):
+    order= Order.objects.all()
+    checkout_detail= CheckoutDetails.objects.all()
+    return render(request, 'core/customers_orders.html', 
+                {   
+                    'order':order,
+                    'checkout_detail':checkout_detail,
+                })

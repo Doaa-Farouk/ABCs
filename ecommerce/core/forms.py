@@ -1,8 +1,6 @@
-
-from cProfile import label
-from dataclasses import fields
-from core.models import CheckoutDetails, Customer, Product
+from core.models import CheckoutDetails, Product
 from django import forms
+from django.contrib.auth.models import User
 
 class ProductForm(forms.ModelForm):
     class Meta:
