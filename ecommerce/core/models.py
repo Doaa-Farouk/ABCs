@@ -1,7 +1,7 @@
 from audioop import reverse
+from email.mime import image
 from django.db import models
 from django.contrib.auth.models import User
-
 
 # Create your models here.
 
@@ -24,23 +24,28 @@ class Category(models.Model):
         return self.category_name
     
 class Pictuers(models.Model):
-    pass
+    image=models.ImageField(upload_to='images/',verbose_name='صورة المنتج',null= True)
+    product=models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name=' المنتج',default=1)
+
+    def __str__(self):
+        return self.image.url
     
 class Product(models.Model):
     name= models.CharField(max_length=300,verbose_name='اسم المنتج')
     category= models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name='اسم الفئة')
     description=models.TextField(verbose_name='التفاصيل')
     price=models.FloatField(default=0.0,verbose_name='السعر')
-    count=models.IntegerField(default=0,verbose_name='الكمية')
-    image=models.ImageField(upload_to='images/',verbose_name='صورة المنتج')
-    
+    count=models.IntegerField(default=0,verbose_name='الكمية')    
     
     def get_add_to_cart_url(self):
         return reverse('core:add_to_cart',kwargs={
             'pk':self.pk
         })
 
-
+    def __str__(self):
+        return self.name
+    
+    
 class OrderItem(models.Model):
     user= models.ForeignKey(User, on_delete=models.CASCADE, null=False , blank=False)
     ordered= models.BooleanField(default=False)

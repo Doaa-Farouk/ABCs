@@ -28,18 +28,11 @@
           <div class="col-lg-8">
             <div class="portfolio-details-slider swiper">
               <div class="swiper-wrapper align-items-center">
-
+                {% for i in images %}
                 <div class="swiper-slide">
-                  <img src="{{ MEDIA_URL }}{{product.image.url}}" alt="صورة هنا">
+                  <img src="{{ MEDIA_URL }}{{i.image.url}}" alt="صورة هنا">
                 </div>
-
-                <!-- <div class="swiper-slide">
-                  <img src="{% static 'img/portfolio/portfolio-details-2.jpg'%}" alt="صورة هنا">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="{% static 'img/portfolio/portfolio-details-3.jpg'%}" alt="صورة هنا">
-                </div> -->
+                {%endfor%}
 
               </div>
               <div class="swiper-pagination"></div>
@@ -50,7 +43,9 @@
             <div class="portfolio-info">
               <h3>وصف المنتج</h3>
               <ul>
-                <li><strong>الصنف</strong>: {{category.category_name}}</li>
+                {% for c in category%}
+                <li><strong>الصنف</strong>: {{c.category_name}}</li>
+                {%endfor%}
                 <li><strong>الاسم </strong>: {{product.name}}</li>
                 <li><strong>السعر </strong>: {{product.price}} ر.ي</li>
 

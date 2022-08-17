@@ -18,9 +18,10 @@
             <p>{{o.order_date}}</p> 
             <!-- <p>===================================</p> -->
 
-            
+            <p>===================================</p>
+            {%endfor%}
             {% for detail in checkout_detail %}
-                <p>id{{detail.user.id}}</p>
+                <p>{{detail.user.first_name}} {{detail.user.last_name}}</p>
                 <p>{{detail.phone}}</p>
                 <p>{{detail.city}}</p>
                 <p>{{detail.country}}</p>
@@ -28,7 +29,6 @@
                 <p>{{detail.specific_address}}</p>
             {%endfor%}
 
-        <p>===================================</p>
-        {%endfor%}
+       
 </body>
 </html>

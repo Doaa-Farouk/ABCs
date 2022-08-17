@@ -4,22 +4,33 @@ from core.forms import *
 from core.models import *
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+from django.http import Http404
+
 
 # Create your views here.
+def nav(request):
+    categories = Category.objects.all()
+    
+    return render(request, 'core/hf.html',{})
+                                              
+                                                
 def index(request):
     products = Product.objects.all()[:30]
+    images= Pictuers.objects.all()
     categories = Category.objects.all()
     
     return render(request, 'core/index.html',{'products': products,
-                                              'categories':categories})
+                                              'images':images,
+                                              'categories':categories
+                                              })
 
 def profile(request,username):
     user= User.objects.get(username=username)
     return render(request,'accounts/profile.html',{'user':user})
   
         
-
+@permission_required
 def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -32,14 +43,25 @@ def add_product(request):
     form = ProductForm()
     return render(request, 'core/add_product.html', {'form':form})
 
+def add_category(request):
+    if request.method == 'POSt':
+        pass
 
 
 
 def product_details(request,pk):
     product= Product.objects.get(pk=pk)
-    # category= Category.objects.get(pk=pk)
-    return render(request, 'core/product_details.html',{'product':product}#,{'category':category}
-                  )
+    images= Pictuers.objects.filter(product__pk=pk)
+    category= Category.objects.filter(product__pk=pk)
+    categories = Category.objects.all()
+    return render(request, 'core/product_details.html',
+                  {'product':product,
+                   'images': images,
+                   'category':category,
+                   'categories':categories
+                   })
+    
+                  
     
     
 @login_required(login_url='/accounts/ulogin/')   
@@ -177,12 +199,14 @@ def checkout(request):
     # what does valid form mean 
     # what are the standards
 
-
 def customers_orders(request):
-    order= Order.objects.all()
-    checkout_detail= CheckoutDetails.objects.all()
-    return render(request, 'core/customers_orders.html', 
-                {   
-                    'order':order,
-                    'checkout_detail':checkout_detail,
-                })
+    if request.user.is_superuser:
+        order= Order.objects.all()
+        checkout_detail= CheckoutDetails.objects.all()
+        return render(request, 'core/customers_orders.html', 
+                    {   
+                        'order':order,
+                        'checkout_detail':checkout_detail,
+                    })
+    else:
+        raise Http404('PAGE IS NOT FOUND')
