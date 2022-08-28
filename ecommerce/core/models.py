@@ -36,6 +36,8 @@ class Product(models.Model):
     description=models.TextField(verbose_name='التفاصيل')
     price=models.FloatField(default=0.0,verbose_name='السعر')
     count=models.IntegerField(default=0,verbose_name='الكمية')    
+    image=models.ImageField(upload_to='images/',verbose_name='صورة العرض',null= True)
+
     
     def get_add_to_cart_url(self):
         return reverse('core:add_to_cart',kwargs={

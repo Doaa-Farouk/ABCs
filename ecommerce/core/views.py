@@ -29,8 +29,7 @@ def profile(request,username):
     user= User.objects.get(username=username)
     return render(request,'accounts/profile.html',{'user':user})
   
-        
-@permission_required
+                
 def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -160,7 +159,8 @@ def remove_item(request, pk):
 def checkout(request):
     if CheckoutDetails.objects.filter(user=request.user).exists():
         # do this functionality when frontend is ready
-        # messages.info(request,'do you want to use last details or you want to update them?')
+        
+        messages.info(request,'do you want to use last details or you want to update them?')
         return render(request, 'core/checkout.html')
     
     if request.method == 'POST':
@@ -186,8 +186,8 @@ def checkout(request):
             form= CheckoutForm()
             # print('coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool')
             # this is working
-            messages.info(request, 'تم تأكيد الطلب بنجاح, سيتم توصيل الطلب إلى العنوان الذي قمت بإدخاله')
-            return render(request,'core/checkout.html',{'form':form})
+            messages.success(request, 'تم تأكيد الطلب بنجاح, سيتم توصيل الطلب إلى العنوان الذي قمت بإدخاله')
+            return redirect('/')
         else:
             messages.info(request, 'failed')
             form= CheckoutForm()
@@ -203,7 +203,7 @@ def customers_orders(request):
     if request.user.is_superuser:
         order= Order.objects.all()
         checkout_detail= CheckoutDetails.objects.all()
-        return render(request, 'core/customers_orders.html', 
+        return render(request, 'cp/customers_orders.html', 
                     {   
                         'order':order,
                         'checkout_detail':checkout_detail,

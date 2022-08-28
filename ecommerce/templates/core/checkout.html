@@ -7,6 +7,14 @@
     <title>Document</title>
 </head>
 <body dir="rtl">
+    {% if messages %}
+    {%for m in messages%}
+    
+    <p>{{m}}</p>
+    <input name="checkout" id="checkout" class="" type="submit" value="update address">
+
+    {%endfor%}
+    {%endif%}
     <form action="" method="POST">
         {% csrf_token %}
         {{form.as_p}}

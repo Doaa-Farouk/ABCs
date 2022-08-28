@@ -46,6 +46,8 @@
         <nav id="navbar" class="navbar">
           <ul>
             <li><a class="nav-link scrollto active" href="{% url 'index'%}">الرئيسية </a></li>
+           <li><a href="{% url 'orderlist'%}">سلتي<i class="bi bi-cart"></i></a></li> 
+
             {%for category in categories%}
               <li><a class="nav-link scrollto" href="#">{{category.category_name}}</a></li>
             {%endfor%}

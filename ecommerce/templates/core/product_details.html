@@ -28,11 +28,16 @@
           <div class="col-lg-8">
             <div class="portfolio-details-slider swiper">
               <div class="swiper-wrapper align-items-center">
+                <div class="swiper-slide">
+                  <img src="{{ MEDIA_URL }}{{product.image.url}}" alt="صورة هنا">
+                </div>
+               
                 {% for i in images %}
                 <div class="swiper-slide">
                   <img src="{{ MEDIA_URL }}{{i.image.url}}" alt="صورة هنا">
                 </div>
                 {%endfor%}
+               
 
               </div>
               <div class="swiper-pagination"></div>

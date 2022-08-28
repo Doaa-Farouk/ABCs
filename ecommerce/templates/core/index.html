@@ -36,8 +36,8 @@
               <div class="pic">
                 <div class="portfolio-wrap">
                   
-                  <img src="{{ MEDIA_URL }}{{images.image.url}}" class="img-fluid" alt="This is pic">
-                  
+                  <img src="{{ MEDIA_URL }}{{product.image.url}}" class="img-fluid" alt="This is pic">
+                 
                   <div class="portfolio-info">
                     <a href="{% url 'product_details' product.pk%}"><h4>{{product.name}}</h4></a>
                    
