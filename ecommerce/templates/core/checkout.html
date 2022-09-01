@@ -8,18 +8,22 @@
 </head>
 <body dir="rtl">
     {% if messages %}
-    {%for m in messages%}
-    
-    <p>{{m}}</p>
-    <input name="checkout" id="checkout" class="" type="submit" value="update address">
+    <form action="" method="post">
+        {% csrf_token %}
+        {%for m in messages%}
+        
+        <p>{{m}}</p>
+        <input name="update_address" id="update_address" class="" type="submit" value="تعديل العنوان">
+        <input name="checkout" id="checkout" class="" type="submit" value="استخدم العنوان السابق">
 
-    {%endfor%}
+        {%endfor%}
+    </form>
     {%endif%}
+
     <form action="" method="POST">
         {% csrf_token %}
         {{form.as_p}}
-       <!-- <button type="submit">تأكيد الطلب</button> -->
-       <input name="checkout" id="checkout" class="" type="submit" value="Checkout">
+       <input name="checkout" id="checkout" class="" type="submit" value="تأكيد الطلب">
           
     </form>
 </body>

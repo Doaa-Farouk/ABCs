@@ -1,94 +1,67 @@
 {% extends 'core/hf.html'%}
 {%block index%}
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
-    <div class="container text-center position-relative" data-aos="fade-in" data-aos-delay="200">
-      <h1>...مرحباً بكم في موقعنا اللولبي </h1>
-      <h2>لدينا اغراض لولبية</h2>
-      <a href="#about" class="btn-get-started scrollto">Get Started</a>
-    </div>
-  </section><!-- End Hero -->
+    <!-- Start Hero -->
+    <section id="hero">
+        <div class="owl-carousel">
 
-  <main id="main">
-     <!-- ======= Portfolio Section ======= -->
-     <section id="portfolio" class="portfolio">
-      <div class="container">
-
-        <div class="section-title" data-aos="fade-left">
-          <h2>منتجاتنا</h2>
-          <p>اكسسوارات نسائية ورجالية ... ادوات تجميل .. اكسسوارات للاجهزة</p>
-        </div>
-
-        <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">الكل</li>
-              <li data-filter=".filter-app">App</li>
-              <li data-filter=".filter-card">Card</li>
-              <li data-filter=".filter-web">Web</li>
-            </ul>
-          </div>
-        </div>
-
-        <div id="con" class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-            <ul class="portfolio-item filter-app">
-              {% for product in products %}
-              <div class="pic">
-                <div class="portfolio-wrap">
-                  
-                  <img src="{{ MEDIA_URL }}{{product.image.url}}" class="img-fluid" alt="This is pic">
-                 
-                  <div class="portfolio-info">
-                    <a href="{% url 'product_details' product.pk%}"><h4>{{product.name}}</h4></a>
-                   
-                  </div>
+            <div class="slider_img">
+                <img src="https://images.unsplash.com/photo-1529154691717-3306083d869e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="hello">
+                <div class="container">
+                    <h1>السلام عليكم ورحمة الله وبركاته</h1>
+                    <h2>إزيك يا برو, هنكون مبسوطين اوي لو اشتريت مننا (يا منعاه)</h2>
+                    <button class='sign-in'>Sign In</button>
                 </div>
-                <div class="desc">
-                  <span class="price">{{product.price}} ر.ي</span>
-                  <a class="add_to_cart" href="{% url 'add_to_cart' product.pk%}"><i class="bi bi-cart"></i></a>
+            </div>
+
+            <div class="slider_img">
+                <img src="https://images.unsplash.com/photo-1567027757540-7b572280fa22?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="hello">
+                <div class="container">
+                    <h2>إزيك يا برو, هنكون مبسوطين اوي لو اشتريت مننا (يا منعاه)</h2>
+                    <button class='sign-in'>Sign In</button>
                 </div>
-              </div>
-                {% endfor %}
-            </ul>
-          </div>
-          <a class="view_all" href="#">عرض الكل</a>
-      </div>
+            </div>
+            
+        </div>
     </section>
-    <!-- End Portfolio Section -->
 
-    <!-- ======= Counts Section ======= -->
-    <section id="counts" class="counts">
-      <div class="container">
+    <!-- Start Products -->    
+    <section id="products">
+        <div class="container">
+            <!-- Start Filters -->
+                <div class="filters" id="filters">
+                    <div class="categories_filters second-slider owl-carousel">
+                        <img data-category-name="all" class='active' src="imgs/categories/all.webp">
+                        <img data-category-name="scientific" src="imgs/categories/ctg(2).png">
+                        <img data-category-name="IQ" src="imgs/categories/ctg(4).png">
+                        <img data-category-name="handic" src="imgs/categories/ctg(3).png">
+                        <img data-category-name="IQ" src="imgs/categories/ctg(4).png">
+                        <img data-category-name="sports" src="imgs/categories/ctg(5).png">
+                    </div>
+                </div>
+            <!-- End Filters -->
 
-        <div class="row counters">
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-            <p>Clients</p>
-          </div>
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-            <p>Projects</p>
-          </div>
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
-            <p>Hours Of Support</p>
-          </div>
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
-            <p>Hard Workers</p>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Counts Section -->
-
-  </main><!-- End #main -->
-
- {%endblock index%}
-
-  
+            <div class="procucts_grid">
+            {% for product in products %}
+                <div class="product" data-category="scientific">
+                    <div class="img_holder">
+                        <a href="{% url 'product_details' product.pk%}">
+                            <img src="{{ MEDIA_URL }}{{product.image.url}}" alt="prodcut">
+                        </a>
+                    </div>
+                    <div class="details">
+                        <div class="prices">
+                            <span class="old-price">350</span>
+                            <span class="current-price">{{product.price}}</span>
+                        </div>
+                        <a href="#">
+                            <div class="product_name">{{product.name}}</div>
+                        </a>                        
+                        <button class="add_cart"><a href="{% url 'add_to_cart' product.pk%}">add to cart</a></button>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+            </div>
+    </section>
+    <!-- End Products -->
+{%endblock index%} 

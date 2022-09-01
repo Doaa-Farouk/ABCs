@@ -1,0 +1,45 @@
+<form action="" method="POST">
+        <input type="hidden" name="csrfmiddlewaretoken" value="yvsFTaPfQD4L6nKx7U54C86qfD9TQ4ouvMDkfX5K1zMEdR6PjdRHcprXXVBhDK0Q">
+        <p>
+    <label for="id_phone">التلفون:</label>
+    <input type="text" name="phone" class="phone input" maxlength="12" required="" id="id_phone">
+    
+    
+  </p>
+
+  
+  <p>
+    <label for="id_country">الدولة:</label>
+    <input type="text" name="country" class="country_name input" maxlength="30" required="" id="id_country">
+    
+    
+  </p>
+
+  
+  <p>
+    <label for="id_city">المدينة:</label>
+    <input type="text" name="city" class="city input" maxlength="30" required="" id="id_city">
+    
+    
+  </p>
+
+  
+  <p>
+    <label for="id_address">العنوان:</label>
+    <input type="text" name="address" class="address input" maxlength="200" required="" id="id_address">
+    
+    
+  </p>
+
+  
+  <p>
+    <label for="id_specific_address">تفاصيل العنوان:</label>
+    <input type="text" name="specific_address" class="address input" maxlength="200" required="" id="id_specific_address">
+    
+    
+      
+    
+  </p>
+       <input name="checkout" id="checkout" class="" type="submit" value="تأكيد الطلب">
+          
+    </form>

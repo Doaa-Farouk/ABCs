@@ -1,73 +1,79 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>ABCs Store</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="{% static 'img/favicon.png' %}" rel="icon">
-  <link href="{% static 'img/apple-touch-icon.png'%}" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="{% static 'css/style.css'%}" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABCD</title>
+    <link rel="stylesheet" href="{% static 'fonts/fontawesome-free-5.15.1-web/css/all.css'%}">
+    <link rel="stylesheet" href="{% static 'css/normalize.css'%}">
+    <link rel="stylesheet" href="{% static 'dist/assets/owl.theme.default.min.css'%}">
+    <link rel="stylesheet" href="{% static 'dist/assets/owl.carousel.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
 </head>
+<body>
+    <header id="header">
+        <nav class="user_nav">
+            <div class="container" id="user_nav">
+                <!-- <div class="logo"></div> -->
+                <img src="{% static 'imgs/logo.png'%}" alt="logo" class="logo">
+                <!-- User Panel in nav -->
+                <!-- <i class='fas fa-hamburger hamburger'> -->
+                    <ul id="user_panel">
+                        <li class="dropdown_opener">
+                            <i class="fas fa-user"></i>
+                            <ul class='inner_dropdown'>
+                              {% if user.is_authenticated %}
+                                <li class='sign-in'><a href="{% url 'profile' user.username %}">حسابي</a></li>
+                                <li><a href="{% url 'user_logout' %}">تسجيل خروج</a></li>
+                                <li>السلام عليكم</li>
+                                <li>السلام عليكم</li>
+                                <li>السلام عليكم</li>
+                                <li>السلام عليكم</li>
+                                <li>السلام عليكم</li>
+                                {%else%}
+                                <li><a href="{% url 'user_login' %}">تسجيل دخول</a></li>
+                                {%endif%}
+                            </ul>
+                        </li>
 
-<body dir="rtl">
+                        <li><a href="#"><i class="fas fa-globe"></i></a></li>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top d-flex align-items-center">
-    <div class="container">
-      <div class="header-container d-flex align-items-center justify-content-between">
-        <div class="logo">
-          <h1 class="text-light"><a href="#"><span>ABCs</span></a></h1>
-          <!-- Uncomment below if you prefer to use an image logo -->
-          <!-- <a href="index.html"><img src="{% static img/logo.png" alt="" class="img-fluid"></a>-->
-        </div>
+                        <li><a href="{% url 'orderlist'%}"><i class="fas fa-shopping-cart"></i></a></li>
 
-        <nav id="navbar" class="navbar">
-          <ul>
-            <li><a class="nav-link scrollto active" href="{% url 'index'%}">الرئيسية </a></li>
-           <li><a href="{% url 'orderlist'%}">سلتي<i class="bi bi-cart"></i></a></li> 
+                        <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                    </ul>
+            </div>
+        </nav>
 
-            {%for category in categories%}
-              <li><a class="nav-link scrollto" href="#">{{category.category_name}}</a></li>
-            {%endfor%}
-              </ul>
-              <ul>
-            </li>
-            {% if user.is_authenticated %}
-            <li><a class="nav-link scrollto" href="{% url 'profile' user.username %}"><i class="bi bi-person-circle"></i></a></li>
-            <li><a class="nav-link scrollto" href="#contact">تواصل معنا</a></li>
-            <li><a class="getstarted scrollto" href="{% url 'user_logout' %}">تسجيل خروج</a></li>
-            {% else %}
-            <li><a class="getstarted scrollto" href="{% url 'user_login' %}">تسجيل دخول</a></li>
-            {% endif %}
-          </ul>
-          <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav><!-- .navbar -->
+        <nav class="categories_nav">
+          <div id="categories_nav" class="container">
+              <!-- Categories in nav -->
+              <!-- <div class="categories_container"> -->
+                  <i class="fas fa-hamburger hamburger" id=hamburger>
+                  </i>
+                  <ul class="categories_ul">
+                      <i class="fas fa-arrow-up" id="close"></i>
+                      <li><a href="{% url 'index'%}">الرئيسية</a></li>
+                      {%for category in categories%}
+                        <li><a href="#">{{category.category_name}}</a></li>
+                      {%endfor%}
+                      
+                  </ul>
+              <!-- </div> -->
+              <form action="">
+                  <div class="input">
+                      <label for="search_categories" id='search_categories_label'>
+                          <i class="fa fa-search"></i>
+                      </label>
+                      <input type="search" name="search_categories" id="search_categories">
+                  </div>
+              </form>
+          </div>
+      </nav>
+  </header>
 
-      </div><!-- End Header Container -->
-    </div>
-  </header><!-- End Header -->
   {%block index%}
   {%endblock index%}
   {% block details%}
@@ -77,94 +83,62 @@
   {% block orderlist%}
   {% endblock orderlist%}
 
-  <footer id="footer">
-
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-
-          <!-- <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>ABCs</h3>
-            <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
-            </p>
-          </div> -->
-
-          <!-- <div class="col-lg-2 col-md-6 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-            </ul>
-          </div> -->
-
-          <!-- <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-            </ul>
-          </div> -->
-
-            <!-- <div class="col-lg-4 col-md-6 footer-newsletter">
-              <h4></h4>
-              <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-              <form action="" method="post">
-                <input type="email" name="email"><input type="submit" value="Subscribe">
-              </form>
-            </div> -->
-
+  <!-- Footer -->
+<!-- Start footer -->
+<footer id="footer" class='footer'>
+    <div class="container">
+        <ul>
+            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+        </ul>
+        <div class="info">
+            <p>all rights reserved for <a href="#">OurWebsite.com</a></p>
+            <p>designed by <a href="#">Me</a></p>
         </div>
-      </div>
     </div>
-
-    <div class="container d-md-flex py-4">
-
-      <div class="me-md-auto text-center text-md-start">
-        <!-- <div class="copyright">
-          &copy; حقوق النشر <strong><span>ABCs</span></strong> محفوظة
-        </div> -->
-        <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/bethany-free-onepage-bootstrap-theme/ -->
-          programmed by <a href="https://bootstrapmade.com/">Doaa & Mohammed Farouk </a>
-        </div>
-      </div>
-      <div class="social-links text-center text-md-right pt-3 pt-md-0">
-        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-      </div>
-    </div>
-  </footer><!-- End Footer -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-<!-- Vendor JS Files -->
-<script src="{% static 'vendor/purecounter/purecounter.js' %}"></script>
-<script src="{% static 'vendor/aos/aos.js' %}"></script>
-<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
-<script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-<script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
-<script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-
-<!-- Template Main JS File -->
-<script src="{% static 'js/main.js' %}"></script>
-
+</footer>
+<!-- End footer -->
+    <script src="{% static 'dist/owl.carousel.min.js'%}"></script>
+    <script src="{% static 'code.js'%}"></script>
+    <script src="{% static 'jquery.min.js'%}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

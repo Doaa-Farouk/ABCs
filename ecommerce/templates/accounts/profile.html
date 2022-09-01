@@ -31,17 +31,11 @@
             <a href="{% url 'orderlist'%}">سلتي<i class="bi bi-cart"></i></a>
           </dd>
       </dl>
-      {% if user.is_superuser %}
-      كمية كل منتج 
-      
-      <button> <a href="{% url 'add_product'%}"> إضافة منتج</a></button>
-      <button> <a href="{% url 'add_category'%}"> إضافة قسم</a></button>
-      {%endif%}
     </main>
   
   </div> <!-- end profile -->
   
- 
+
 
 {% endblock profile%}
 

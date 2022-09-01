@@ -153,14 +153,11 @@ def remove_item(request, pk):
             return redirect("orderlist")
     else:
         return redirect("orderlist")
-    
-    
-    
+
+      
 def checkout(request):
     if CheckoutDetails.objects.filter(user=request.user).exists():
-        # do this functionality when frontend is ready
-        
-        messages.info(request,'do you want to use last details or you want to update them?')
+        messages.info(request,'هل تريد تعديل العنوان ام استخدام العنوان السابق؟')
         return render(request, 'core/checkout.html')
     
     if request.method == 'POST':
