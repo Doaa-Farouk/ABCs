@@ -156,9 +156,9 @@ def remove_item(request, pk):
 
       
 def checkout(request):
-    if CheckoutDetails.objects.filter(user=request.user).exists():
-        messages.info(request,'هل تريد تعديل العنوان ام استخدام العنوان السابق؟')
-        return render(request, 'core/checkout.html')
+    # if CheckoutDetails.objects.filter(user=request.user).exists():
+    #     messages.info(request,'هل تريد تعديل العنوان ام استخدام العنوان السابق؟')
+    #     return render(request, 'core/checkout.html')
     
     if request.method == 'POST':
         form= CheckoutForm(request.POST)

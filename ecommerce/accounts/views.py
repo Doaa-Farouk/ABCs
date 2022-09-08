@@ -1,11 +1,9 @@
-import email
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from core.models import *
 from django.contrib import messages
 
-# from accounts.forms import *
 # Create your views here.
 
 def user_login(request):
@@ -16,7 +14,6 @@ def user_login(request):
         logged_user = authenticate(username=username, password=password)
         if logged_user is not None:
             login(request, logged_user)
-            # should be redirected to profile page
             return redirect('/')
         messages.info(request, 'فشل تسجيل الدخول , حاول مرة أخرى')
     return render(request, 'accounts/login.html')

@@ -30,19 +30,17 @@
             <!-- Start Filters -->
                 <div class="filters" id="filters">
                     <div class="categories_filters second-slider owl-carousel">
-                        <img data-category-name="all" class='active' src="imgs/categories/all.webp">
-                        <img data-category-name="scientific" src="imgs/categories/ctg(2).png">
-                        <img data-category-name="IQ" src="imgs/categories/ctg(4).png">
-                        <img data-category-name="handic" src="imgs/categories/ctg(3).png">
-                        <img data-category-name="IQ" src="imgs/categories/ctg(4).png">
-                        <img data-category-name="sports" src="imgs/categories/ctg(5).png">
+                        <p data-category-name="all" class='active'>الكل</p>
+                        {%for category in categories%}
+                        <p data-category-name="{{category.category_name}}">{{category.category_name}}</p>
+                        {%endfor%}
                     </div>
                 </div>
             <!-- End Filters -->
 
             <div class="procucts_grid">
             {% for product in products %}
-                <div class="product" data-category="scientific">
+                <div class="product" data-category="all">
                     <div class="img_holder">
                         <a href="{% url 'product_details' product.pk%}">
                             <img src="{{ MEDIA_URL }}{{product.image.url}}" alt="prodcut">
@@ -56,7 +54,7 @@
                         <a href="#">
                             <div class="product_name">{{product.name}}</div>
                         </a>                        
-                        <button class="add_cart"><a href="{% url 'add_to_cart' product.pk%}">add to cart</a></button>
+                        <button class="add_cart"><a href="{% url 'add_to_cart' product.pk%}">إضافة إلى السلة</a></button>
                     </div>
                 </div>
             {% endfor %}

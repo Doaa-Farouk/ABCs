@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <title>Login</title>
+</head>
+<body dir="rtl">  
+    <div class="login-box">
+        <h2>تسجيل دخول</h2>
+        <h2><a href="{% url 'user_register' %}">انشاء حساب</a></h2>
+        
+          {% if messages %}
+          {% for message in messages %}
+            <h4>{{message}}</h4>
+          {% endfor %}
+          {%endif%}
+        
+        <form action="" method="POST">
+            {% csrf_token %}
+          <div class="user-box">
+            <input type="text" name="username" id="username" required="" placeholder="اسم المستخدم">
+          </div>
+          <div class="user-box">
+            <input type="password" name="password" id="password" required="" placeholder="كلمة المرور">
+          </div>
+
+          <a href="#">
+            <input class="s" type="submit" value="دخول">
+          </a>
+        </form>
+      </div>
+    
+
+</body>
+</html>
