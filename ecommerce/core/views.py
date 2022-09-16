@@ -27,9 +27,11 @@ def index(request):
 
 def profile(request,username):
     user= User.objects.get(username=username)
-    return render(request,'accounts/profile.html',{'user':user})
-  
-                
+    if request.user.username == username:
+        return render(request,'accounts/profile.html',{'user':user})
+    else:
+        raise Http404('PAGE IS NOT FOUND')     
+           
 def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -93,13 +95,15 @@ def add_to_cart(request,pk):
         return redirect('product_details',pk=pk)
 
 def orderlist(request):
-    if Order.objects.filter(user=request.user, ordered=False).exists():
-        order = Order.objects.get(user=request.user, ordered=False)
+    if request.user.is_authenticated:
+        if Order.objects.filter(user=request.user, ordered=False).exists():
+            order = Order.objects.get(user=request.user, ordered=False)
+            return render(request, "core/orderlist.html", {"order": order})
+        return render(request, "core/orderlist.html", {"message": "Your Cart is Empty"})
+    else:
+        order = ''
         return render(request, "core/orderlist.html", {"order": order})
-    return render(request, "core/orderlist.html", {"message": "Your Cart is Empty"})
-
-
-
+    
 def add_item(request,pk):
     product= Product.objects.get(pk=pk)
     order_item, created= OrderItem.objects.get_or_create(
@@ -156,9 +160,8 @@ def remove_item(request, pk):
 
       
 def checkout(request):
-    # if CheckoutDetails.objects.filter(user=request.user).exists():
-    #     messages.info(request,'هل تريد تعديل العنوان ام استخدام العنوان السابق؟')
-    #     return render(request, 'core/checkout.html')
+    if CheckoutDetails.objects.filter(user=request.user).exists():
+        return render(request, 'core/checkout.html')
     
     if request.method == 'POST':
         form= CheckoutForm(request.POST)
@@ -178,11 +181,7 @@ def checkout(request):
                 specific_address= specific_address
             )
             checkoutdetails.save()
-            # order= Order.objects.filter(user= request.user)
-            # order.ordered= True
             form= CheckoutForm()
-            # print('coooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooool')
-            # this is working
             messages.success(request, 'تم تأكيد الطلب بنجاح, سيتم توصيل الطلب إلى العنوان الذي قمت بإدخاله')
             return redirect('/')
         else:
@@ -195,7 +194,38 @@ def checkout(request):
     
     # what does valid form mean 
     # what are the standards
-
+    
+def update_checkout(request):
+    if CheckoutDetails.objects.filter(user=request.user).exists():
+        if request.method == 'POST':
+            form= CheckoutForm(request.POST)
+            if form.is_valid():
+                phone = form.cleaned_data.get('phone')
+                country= form.cleaned_data.get('country')
+                city= form.cleaned_data.get('city')
+                address= form.cleaned_data.get('address')
+                specific_address= form.cleaned_data.get('specific_address')
+                
+                checkoutdetails= CheckoutDetails(
+                    user= request.user,
+                    phone= phone,
+                    country= country,
+                    city= city,
+                    address= address,
+                    specific_address= specific_address
+                )
+                checkoutdetails.save()
+                form= CheckoutForm()
+                messages.success(request, 'تم تأكيد الطلب بنجاح, سيتم توصيل الطلب إلى العنوان الذي قمت بإدخاله')
+                return redirect('/')
+            else:
+                messages.info(request, 'failed')
+                form= CheckoutForm()
+                return render(request,'core/checkout.html',{'form':form})
+        else:
+            form= CheckoutForm()
+            return render(request,'core/checkout.html',{'form':form})
+        
 def customers_orders(request):
     if request.user.is_superuser:
         order= Order.objects.all()

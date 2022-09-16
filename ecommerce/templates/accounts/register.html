@@ -1,49 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/css/accounts.css">
-    <title>New Account</title>
-</head>
-<body dir="rtl">
-    <div class="login-box">
-        <h2>انشاء حساب </h2>
-        <form action="" method="POST">
-            {% csrf_token %}
-            {% if messages %}
-            {% for message in messages %}
+{% extends 'core/hf.html'%}
+{%load static%}
+{%block register%}
+
+    <form method="POST" class="logging_form">
+        {% csrf_token %}
+        <h1>إنشاء حساب</h1>
+        {% if messages %}
+          {% for message in messages %}
             <h4>{{message}}</h4>
-            {% endfor %}
-            {%endif%}
-            <div class="user-box">
-                <input type="text" name="first_name" id="first_name" required="" placeholder="الاسم الاول ">                
+          {% endfor %}
+          {%endif%}
+            <div>
+                <label for="first_name">الاسم الأول</label>
+                <input type="text" name="first_name" id="first_name" >
             </div>
-
-            <div class="user-box">
-                <input type="text" name="last_name" id="last_name" required="" placeholder="الاسم الاخير">                
+            <div>
+                <label for="last_name">الاسم الاخير</label>
+                <input type="text" name="last_name" id="last_name">
             </div>
-
-            <div class="user-box">
-                <input type="text" name="username" id="username" required="" placeholder="اسم المستخدم">                
+            <div>
+                <label for="username">اسم المستخدم</label>
+                <input type="text" name="username" id="username">
             </div>
-            <div class="user-box">
-                <input type="email" name="email" id="email" placeholder="البريد الالكتروني">               
+            <div>
+                <label for="email"> البريد الالكتروني</label>
+                <input type="email" name="email" id="email" >
             </div>
-
-            <div class="user-box">
-                <input type="password" name="password" id="password" required="" placeholder="كلمة المرور">
+            <div>
+                <label for="password">كلمة السر</label>
+                <input type="password" name="password" id="password" >
             </div>
-
-            <div class="user-box">
-                <input type="password" name="c_password" id="c_password" placeholder="اعد ادخال كلمة المرور">
-                
+            <div>
+                <label for="first_name"> أعد ادخال كلمة السر</label>
+                <input type="password" name="c_password" id="c_password" >
             </div>
             <a href="#">
             <input class="s" type="submit" value="دخول">
             </a>
         </form>
-        </div>
-</body>
-</html>
+    
+
+{%endblock register%}

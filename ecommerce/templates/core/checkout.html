@@ -10,13 +10,11 @@
     {% if messages %}
     <form action="" method="post">
         {% csrf_token %}
-        {%for m in messages%}
-        
-        <p>{{m}}</p>
-        <input name="update_address" id="update_address" class="" type="submit" value="تعديل العنوان">
+       
+        <input name="update_checkout" id="update_checkout" class="" type="submit" value="تعديل العنوان">
         <input name="checkout" id="checkout" class="" type="submit" value="استخدم العنوان السابق">
 
-        {%endfor%}
+        
     </form>
     {%endif%}
 

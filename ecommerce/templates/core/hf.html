@@ -41,6 +41,7 @@
                         <li><a href="#"><i class="fas fa-globe"></i></a></li>
 
                         <li><a href="{% url 'orderlist'%}"><i class="fas fa-shopping-cart"></i></a></li>
+                        <li>{{order.cart_items_count}}</li>
 
                         <li><a href="#"><i class="fas fa-heart"></i></a></li>
                     </ul>
@@ -84,6 +85,8 @@
   {% endblock orderlist%}
   {% block login%}
   {% endblock login%}
+  {%block register%}
+  {%endblock register%}
 
   <!-- Footer -->
 <!-- Start footer -->
@@ -102,9 +105,10 @@
     </div>
 </footer>
 <!-- End footer -->
-<script src="{% static 'jquery.min.js'%}"></script>
+<script src="{% static 'js/jquery.min.js'%}"></script>
     <script src="{% static 'dist/owl.carousel.min.js'%}"></script>
-    <script src="{% static 'code.js'%}"></script>
+    <script src="{% static 'js/code.js'%}"></script>
+    <script src="{% static 'js/cart.js'%}"></script>
 </body>
 </html>
 

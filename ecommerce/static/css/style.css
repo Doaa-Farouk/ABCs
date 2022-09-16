@@ -28,8 +28,8 @@ input[type="search"]::-webkit-search-results-decoration {
 body {
     margin: 0;
     padding: 0;
-    --main:  #a49fd3;
-    --main_bg: #240050;
+    --main:  #aab7f1;
+    --main_bg: #082889;
     font-family: 'Cairo', sans-serif;
 }
 
