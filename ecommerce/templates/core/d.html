@@ -1,0 +1,57 @@
+{% extends 'core/hf.html'%}
+{%load static%}
+{% block orderlist%}
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<div>.</div>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">الصورة</th>
+        <th scope="col">اسم المنتج</th>
+        <th scope="col">السعر</th>
+        <th scope="col">الكمية</th>
+        <th scope="col">اجمالي السعر</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for order_item in order.items.all %}
+      <tr>
+        <th scope="row"></th>
+        <td>{{order_item.product.image.url}}</td>
+        <td>{{order_item.product.name}}</td>
+        <td>{{order_item.product.price}} ر.ي</td>
+        <td> <a href="{% url 'remove_item' order_item.product.pk%}">-</a>  {{order_item.quantity}}  <a href="{% url 'add_item' order_item.product.pk%}">+</a></td>
+        <td>{{order_item.item_total_price}} ر.ي</td>
+      </tr>
+      {% empty %}
+        <tr>
+            <td>Your cart is empty</td>
+            <td><a href="{% url 'index' %}">continue shopping</a>
+            </td>
+        </tr>
+      {%endfor%}
+        {%if order.total_price%}
+            <tr>
+                <th>اجمالي الطلب</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{order.total_price}} ر.ي</td>
+            </tr>
+            {%endif%}
+            
+          </tbody>
+        <a href="{% url 'checkout' %}"> ersal altalab</a>
+        <p>counts == {{order.cart_items_count}}</p>
+  </table>
+    
+{% endblock orderlist%}

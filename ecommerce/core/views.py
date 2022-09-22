@@ -9,10 +9,10 @@ from django.http import Http404
 
 
 # Create your views here.
-def nav(request):
-    categories = Category.objects.all()
+# def nav(request):
+#     categories = Category.objects.all()
     
-    return render(request, 'core/hf.html',{})
+#     return render(request, 'core/hf.html',{'categories':categories})
                                               
                                                 
 def index(request):
@@ -20,12 +20,14 @@ def index(request):
     images= Pictuers.objects.all()
     categories = Category.objects.all()
     
+    
     return render(request, 'core/index.html',{'products': products,
                                               'images':images,
                                               'categories':categories
                                               })
 
 def profile(request,username):
+    categories = Category.objects.all()
     user= User.objects.get(username=username)
     if request.user.username == username:
         return render(request,'accounts/profile.html',{'user':user})
@@ -95,14 +97,18 @@ def add_to_cart(request,pk):
         return redirect('product_details',pk=pk)
 
 def orderlist(request):
+    categories = Category.objects.all()
+    
     if request.user.is_authenticated:
         if Order.objects.filter(user=request.user, ordered=False).exists():
             order = Order.objects.get(user=request.user, ordered=False)
-            return render(request, "core/orderlist.html", {"order": order})
+            cart_items= order.cart_items_count
+            context= {'cart_items':cart_items,"order": order,'categories':categories }
+            return render(request, "core/orderlist.html", context)
         return render(request, "core/orderlist.html", {"message": "Your Cart is Empty"})
     else:
         order = ''
-        return render(request, "core/orderlist.html", {"order": order})
+        return render(request, "core/orderlist.html", {"order": order, 'categories':categories})
     
 def add_item(request,pk):
     product= Product.objects.get(pk=pk)
@@ -148,7 +154,7 @@ def remove_item(request, pk):
                 ordered= False
             )[0]
             if order_item.quantity > 1:
-                order_item.quantity -=1
+                order_item.quantity -= 1
                 order_item.save()
             else:
                 order_item.delete()

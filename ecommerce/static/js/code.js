@@ -64,21 +64,6 @@ $('.owl-carousel.second-slider').owlCarousel({
 })
 
 
-$(document).ready(function(){
-    $(".prodcut-page-container > .img").owlCarousel();
-});
-
-
-$('.prodcut-page-container > .img').owlCarousel({
-    responsive:{
-        0:{
-            items: 1
-        },
-    },
-    rtl: true,
-    loop: true,
-})
-
 
 // Start Categories;
 
@@ -101,3 +86,6 @@ categoriesFilters.forEach((categoryBtn,_,array) => {
         visibleProducts.forEach((visibleProduct) => visibleProduct.style.display = 'flex');
     };
 });
+
+// checking the numbers in quantity field;
+

@@ -1,57 +1,140 @@
 {% extends 'core/hf.html'%}
 {%load static%}
 {% block orderlist%}
-<div>.</div>
-<div>.</div>
-<div>.</div>
-<div>.</div>
-<div>.</div>
-<div>.</div>
-<div>.</div>
-<div>.</div>
-<div>.</div>
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">الصورة</th>
-        <th scope="col">اسم المنتج</th>
-        <th scope="col">السعر</th>
-        <th scope="col">الكمية</th>
-        <th scope="col">اجمالي السعر</th>
-      </tr>
-    </thead>
-    <tbody>
-        {% for order_item in order.items.all %}
-      <tr>
-        <th scope="row"></th>
-        <td>{{order_item.product.image.url}}</td>
-        <td>{{order_item.product.name}}</td>
-        <td>{{order_item.product.price}} ر.ي</td>
-        <td> <a href="{% url 'remove_item' order_item.product.pk%}">-</a>  {{order_item.quantity}}  <a href="{% url 'add_item' order_item.product.pk%}">+</a></td>
-        <td>{{order_item.item_total_price}} ر.ي</td>
-      </tr>
-      {% empty %}
-        <tr>
-            <td>Your cart is empty</td>
-            <td><a href="{% url 'index' %}">continue shopping</a>
-            </td>
-        </tr>
-      {%endfor%}
-        {%if order.total_price%}
-            <tr>
-                <th>اجمالي الطلب</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>{{order.total_price}} ر.ي</td>
-            </tr>
-            {%endif%}
-            
-          </tbody>
-        <a href="{% url 'checkout' %}"> ersal altalab</a>
-        <p>counts == {{order.cart_items_count}}</p>
-  </table>
-    
+<div id='data'>
+    <main>
+        <nav class="itme-summary">
+            <h2>عدد العناصر</h2>
+            <ul class="cart-details grid-data">
+                <li id="selectAll">
+                    <input class='prodcut-checkbox' type="checkbox" name="checkall" id="checkall"  title="Select All">
+                    <label for="checkall">الكل</label>    
+                </li>
+                <li>العنصر</li>
+                <li>السعر</li>
+                <li>الكمية</li>
+                <li>الإجمالي</li>
+            </ul>
+        </nav>
+        <section class='carts-prodcucts'>
+            {% for order_item in order.items.all %}
+            <article class="cart-product">
+                <ul class="grid-data">
+                    <li class="checkbox-li"><input class='prodcut-checkbox' type="checkbox" name="checkall"></li>
+                    <li class='item'>
+                        <img src="{{order_item.product.image.url}}" alt="count">
+                        <div class="info">
+                            <h4>{{order_item.product.name}}</h4>
+                        </div>
+                    </li>
+                    <li class='price'>
+                        <span class="current-price">{{order_item.product.price}}</span>
+                        <!-- <span class="old-price">200$</span> -->
+                    </li>
+                    <li class="qty_total-price">
+                        <div class="qty">
+                            {%if request.user.is_authenticated%}
+                            <a href="{% url 'remove_item' order_item.product.pk%}">-</a> 
+                             {{order_item.quantity}}
+                            <a href="{% url 'add_item' order_item.product.pk%}">+</a>
+
+                            {% else %}
+                            <div class='plus'>+</div>
+                            <input type="number" class='qty-no' disabled value="0">
+                            <div class='minus'>-</div>
+                            {%endif%}
+                        </div>
+                        <div class="total-price phone">{{order_item.item_total_price}}</div>
+                    </li>
+                    <li class="total-price">{{order_item.item_total_price}}</li>
+                </ul>
+            </article>
+            {% empty %}
+            <p>سلتك فارغة!! <a href="{% url 'index' %}" class="copon-link"> تسوق من هنا </a></p>
+            {%endfor%}
+        </section>
+    </main>
+    <aside>
+        <div class="order-summary">
+            <h2>طلب العناصر</h2>
+            <div class="subtotal">
+                <h5>الإجمالي:</h5>
+                {%if order.total_price%}
+                <h3>{{order.total_price}}</h3>
+                {%endif%}
+            </div>  
+            <button class="check-sec"><a href="{% url 'checkout' %}">تأكيد الطلب</a></button>
+            <a href="{% url 'index' %}" class="copon-link">إكمال التسوق</a>
+        </div>
+    </aside>
+    <script>
+
+
+
+
+
+        const qtyInput = Array.from(document.querySelectorAll('#data main section.carts-prodcucts .cart-product .qty .qty-no'));
+        const qtyPlus = Array.from(document.querySelectorAll('#data main section.carts-prodcucts .cart-product .qty .plus'));
+        const qtyMinus = Array.from(document.querySelectorAll('#data main section.carts-prodcucts .cart-product .qty .minus'));
+
+        // qtyInput.forEach((input, inputIndex)=>{
+        //     input.onkeyup = ()=>{
+        //         console.log(qtyPlus[inputIndex]);
+        //     };
+        // });
+        let nums = [];
+
+        qtyPlus.forEach((plus, plusIndex)=>{
+            nums.push(Number(qtyInput[plusIndex].value));
+            plus.onclick = ()=>{
+                qtyInput[plusIndex].value = nums[plusIndex] += 1;
+            };
+            qtyMinus[plusIndex].onclick = ()=>{
+                if(qtyInput[plusIndex].value > 0) qtyInput[plusIndex].value = nums[plusIndex] -= 1;
+            };
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Start Select ALL
+        // if state is negative number means butttons are checked, otherwise they're unchecked;
+        let state = 1;
+        const allBtn = document.getElementById("checkall"),
+            otherBtns = Array.from(document.querySelectorAll('.prodcut-checkbox'));
+        allBtn.onclick = ()=> {
+            state = state * -1;
+            // console.log(state);
+            otherBtns.forEach(btn => {
+                if(state * -1 == 1){
+                    btn.checked = true;
+                    allBtn.title = "Diselect All";
+                    
+                }
+                else {
+                    btn.checked = false;
+                    allBtn.title = "Select All";
+                };
+            });
+        };
+    </script>
+</div>
+
 {% endblock orderlist%}

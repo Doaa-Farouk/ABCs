@@ -11,6 +11,30 @@
     <link rel="stylesheet" href="{% static 'dist/assets/owl.theme.default.min.css'%}">
     <link rel="stylesheet" href="{% static 'dist/assets/owl.carousel.min.css'%}">
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
+
+    <script>
+
+        function getCookie(name){
+            var cookieArr= document.cookie.split(';');
+
+            for(var i=0; i< cookieArr.length; i++){
+                var cookiePair= cookieArr[i].split('=');
+
+                if(name==cookiePair[0].trim()){
+                    return decodeURIComponent(cookiePair[1]);
+
+                }
+            }
+            return null;
+        }
+        var cart= JSON.parse(getCookie('cart'))
+        if(cart == undefined){
+            cart = {}
+            console.log('Cart was created')
+            document.cookie = 'cart= ' + JSON.stringify(cart) + ';domain=;path=/'
+        }
+        console.log('cart:',cart)
+    </script>
 </head>
 <body>
     <header id="header">
@@ -41,7 +65,7 @@
                         <li><a href="#"><i class="fas fa-globe"></i></a></li>
 
                         <li><a href="{% url 'orderlist'%}"><i class="fas fa-shopping-cart"></i></a></li>
-                        <li>{{order.cart_items_count}}</li>
+                        <li>{{cart_items}}</li>
 
                         <li><a href="#"><i class="fas fa-heart"></i></a></li>
                     </ul>
@@ -99,8 +123,8 @@
             <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
         </ul>
         <div class="info">
-            <p>all rights reserved for <a href="#">OurWebsite.com</a></p>
-            <p>designed by <a href="#">Me</a></p>
+            <p>الحقوق محفوظة لدى <a href="#">دعاء</a></p>
+            <p>صممه  <a href="#">محمد</a></p>
         </div>
     </div>
 </footer>
