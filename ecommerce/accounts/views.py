@@ -25,7 +25,6 @@ def user_register(request):
         username = request.POST.get('username')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        # username= first_name + last_name
         password = request.POST.get('password')
         c_password = request.POST.get('c_password')
         email = request.POST.get('email')

@@ -1,1 +1,3 @@
-console.log('hello js')
+if (user === AnonymousUser){
+    console.log('Not logged in')
+}

@@ -54,6 +54,7 @@ class OrderItem(models.Model):
     ordered= models.BooleanField(default=False)
     product= models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     quantity= models.IntegerField(default=1)
+    # device_id= models.CharField(max_length=200, null=True, blank=True)
     
     def __str__(self):
         return f"{self.quantity} of {self.product.name}"

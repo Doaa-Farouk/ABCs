@@ -1,4 +1,4 @@
-<form action="" method="POST">
+<form action="" method="POST" class="checkform">
         <input type="hidden" name="csrfmiddlewaretoken" value="yvsFTaPfQD4L6nKx7U54C86qfD9TQ4ouvMDkfX5K1zMEdR6PjdRHcprXXVBhDK0Q">
         <p>
     <label for="id_phone">التلفون:</label>

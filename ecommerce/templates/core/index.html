@@ -9,18 +9,26 @@
                 <div class="container">
                     <h1>الجزيرة </h1>
                     <h2>متجر متخصص بألعاب الأطفال الهادفة التي تحفز طفلك على التعلم المبكر والابداعي وتنمية قدراته الفكرية والعقلية بالإضافة الى الألعاب الرياضية و الترفيهية</h2>
-                    <button class='sign-in'>تسجيل الدخول</button>
+                    {%if user.is_authenticated%}
+                    <button class='sign-in'>أهلاً بك</button>
+                    {%else%}
+                    <button class='sign-in'><a href="{% url 'user_login' %}">تسجيل الدخول</a></button>
+                    {%endif%}
                 </div>
             </div>
 
-            <div class="slider_img">
+            <!-- <div class="slider_img">
                 <img src="https://img.freepik.com/free-vector/elegant-purple-alcohol-ink-background_41066-1460.jpg?w=1380&t=st=1663858344~exp=1663858944~hmac=51f3703725ffcb907d87883f633ab96265505a5cecedba7814ceec9c8254923c" alt="hello">
                 <div class="container">
                     <h2>متجر متخصص بألعاب الأطفال الهادفة التي تحفز طفلك على التعلم المبكر والابداعي وتنمية قدراته الفكرية والعقلية بالإضافة الى الألعاب الرياضية و الترفيهية</h2>
-                    <button class='sign-in'>تسجيل الدخول</button>
+                    {%if user.is_authenticated%}
+                    <button class='sign-in'>أهلاً بك</button>
+                    {%else%}
+                    <button class='sign-in'><a href="{% url 'user_login' %}">تسجيل الدخول</a></button>
+                    {%endif%}
                 </div>
             </div>
-            
+             -->
         </div>
     </section>
 

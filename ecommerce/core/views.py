@@ -4,16 +4,11 @@ from core.forms import *
 from core.models import *
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
 
-# Create your views here.
-# def nav(request):
-#     categories = Category.objects.all()
-    
-#     return render(request, 'core/hf.html',{'categories':categories})
-                                              
+# Create your views here.                                        
                                                 
 def index(request):
     products = Product.objects.all()[:30]
@@ -34,22 +29,6 @@ def profile(request,username):
     else:
         raise Http404('PAGE IS NOT FOUND')     
            
-def add_product(request):
-    if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-           
-        else:
-            messages.info(request, "failed")    
-            form = ProductForm()
-    form = ProductForm()
-    return render(request, 'core/add_product.html', {'form':form})
-
-def add_category(request):
-    if request.method == 'POSt':
-        pass
-
 
 
 def product_details(request,pk):
@@ -67,7 +46,7 @@ def product_details(request,pk):
                   
     
     
-@login_required(login_url='/accounts/ulogin/')   
+@login_required(login_url='/accounts/ulogin/') 
 def add_to_cart(request,pk):
     product= Product.objects.get(pk=pk)
     order_item, created= OrderItem.objects.get_or_create(
@@ -164,7 +143,7 @@ def remove_item(request, pk):
     else:
         return redirect("orderlist")
 
-      
+@login_required(login_url='/accounts/ulogin/')      
 def checkout(request):
     if CheckoutDetails.objects.filter(user=request.user).exists():
         return render(request, 'core/checkout.html')
@@ -201,45 +180,15 @@ def checkout(request):
     # what does valid form mean 
     # what are the standards
     
-def update_checkout(request):
-    if CheckoutDetails.objects.filter(user=request.user).exists():
-        if request.method == 'POST':
-            form= CheckoutForm(request.POST)
-            if form.is_valid():
-                phone = form.cleaned_data.get('phone')
-                country= form.cleaned_data.get('country')
-                city= form.cleaned_data.get('city')
-                address= form.cleaned_data.get('address')
-                specific_address= form.cleaned_data.get('specific_address')
-                
-                checkoutdetails= CheckoutDetails(
-                    user= request.user,
-                    phone= phone,
-                    country= country,
-                    city= city,
-                    address= address,
-                    specific_address= specific_address
-                )
-                checkoutdetails.save()
-                form= CheckoutForm()
-                messages.success(request, 'تم تأكيد الطلب بنجاح, سيتم توصيل الطلب إلى العنوان الذي قمت بإدخاله')
-                return redirect('/')
-            else:
-                messages.info(request, 'failed')
-                form= CheckoutForm()
-                return render(request,'core/checkout.html',{'form':form})
-        else:
-            form= CheckoutForm()
-            return render(request,'core/checkout.html',{'form':form})
-        
-def customers_orders(request):
-    if request.user.is_superuser:
-        order= Order.objects.all()
-        checkout_detail= CheckoutDetails.objects.all()
-        return render(request, 'cp/customers_orders.html', 
-                    {   
-                        'order':order,
-                        'checkout_detail':checkout_detail,
-                    })
-    else:
-        raise Http404('PAGE IS NOT FOUND')
+def update_checkout(request, user):
+    obj = get_object_or_404(CheckoutDetails, user=request.username)
+    form = CheckoutForm(request.POST, instance=obj)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    return render(request,'core/checkout.html',{'form':form})
+    
+    
+def clear_cart():
+    pass
