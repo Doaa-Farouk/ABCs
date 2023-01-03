@@ -1,12 +1,23 @@
 from audioop import reverse
-from email.mime import image
 from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-
+class Customer(models.Model):
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    # name = models.CharField(max_length=200, null=True, blank=True)
+    device = models.CharField(max_length=200, null=True, blank=True)
+    
+    # def __str__(self):
+    #    if self.user.username:
+    #        name = self.user.username
+    #    else:
+    #        name = self.device
+        
+    #    return str(name)
+       
 class CheckoutDetails(models.Model):
-    user= models.ForeignKey(User,on_delete=models.SET_NULL, null=True, blank=True)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
     order= models.ForeignKey('Order',on_delete=models.SET_NULL, null=True, blank=True)
     phone= models.CharField(max_length= 12)
     country= models.CharField(max_length=30)
@@ -49,12 +60,11 @@ class Product(models.Model):
         return self.name
     
     
-class OrderItem(models.Model):
-    user= models.ForeignKey(User, on_delete=models.CASCADE, null=False , blank=False)
+class OrderItem(models.Model):    
+    # customer= models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
     ordered= models.BooleanField(default=False)
     product= models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     quantity= models.IntegerField(default=1)
-    # device_id= models.CharField(max_length=200, null=True, blank=True)
     
     def __str__(self):
         return f"{self.quantity} of {self.product.name}"
@@ -67,7 +77,8 @@ class OrderItem(models.Model):
 
     
 class Order(models.Model):
-    user= models.ForeignKey(User, on_delete=models.SET_NULL, null=True , blank=False)
+    # user= models.ForeignKey(User, on_delete=models.SET_NULL, null=True , blank=False)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
     items= models.ManyToManyField(OrderItem)
     # try this as foreign key
     start_date= models.DateTimeField(auto_now_add=True)

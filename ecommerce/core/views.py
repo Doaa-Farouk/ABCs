@@ -46,16 +46,25 @@ def product_details(request,pk):
                   
     
     
-@login_required(login_url='/accounts/ulogin/') 
+# @login_required(login_url='/accounts/ulogin/') 
 def add_to_cart(request,pk):
     product= Product.objects.get(pk=pk)
+    try:
+        customer = request.user.customer
+        # customer = None
+        print('found')
+    except:
+        device = request.COOKIES['device']
+        customer, created = Customer.objects.get_or_create(device=device)
+        print('not found')
+        
     order_item, created= OrderItem.objects.get_or_create(
         product= product,
-        user = request.user,
+        customer = customer,
         ordered= False 
     )
     # order_query set
-    order_qs= Order.objects.filter(user=request.user, ordered=False)
+    order_qs= Order.objects.filter(customer=customer, ordered=False)
     if order_qs.exists():
         order= order_qs[0]
         if order.items.filter(product__pk= pk).exists():
@@ -70,7 +79,7 @@ def add_to_cart(request,pk):
         
     else:
         order_date= timezone.now()
-        order= Order.objects.create(user= request.user, order_date=order_date)
+        order= Order.objects.create(customer= customer, order_date=order_date)
         order.items.add(order_item)
         messages.info(request, 'تم إضافة المنتج')
         return redirect('product_details',pk=pk)
@@ -177,18 +186,16 @@ def checkout(request):
         form= CheckoutForm()
         return render(request,'core/checkout.html',{'form':form})
     
-    # what does valid form mean 
-    # what are the standards
-    
-def update_checkout(request, user):
-    obj = get_object_or_404(CheckoutDetails, user=request.username)
+def update_checkout(request, pk):
+    obj = get_object_or_404(CheckoutDetails, pk= request.user.user_id)
     form = CheckoutForm(request.POST, instance=obj)
     if request.method == 'POST':
         if form.is_valid():
             form.save()
             return redirect('/')
     return render(request,'core/checkout.html',{'form':form})
-    
+
+    # الحل انه نخلي الريكوست ياخذ المفتاح حق اليوزر من جدول العناوين بدل المفتاح حق العنوان نفسه
     
 def clear_cart():
     pass

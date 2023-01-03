@@ -38,7 +38,9 @@ def user_register(request):
                 return redirect('user_register') 
             else:
                 user = User.objects.create_user(username= username,email= email,password = password, first_name= first_name, last_name= last_name)                
-                user.save()                    
+                user.save()   
+                customer = Customer.objects.create(user= user,device= request.COOKIES['device'])     
+                customer.save()            
                 
                 # login code
                 logged_user = authenticate(username=username, password=password)

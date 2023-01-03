@@ -9,4 +9,5 @@ admin.site.register(Order)
 admin.site.register(OrderItem)
 admin.site.register(Pictuers)
 admin.site.register(CheckoutDetails)
+admin.site.register(Customer)
 
