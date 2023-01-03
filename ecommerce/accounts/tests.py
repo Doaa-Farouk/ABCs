@@ -1,4 +1,6 @@
-from django.test import TestCase
 
+from core.models import *
 # Create your tests here.
-print(chr(59))
+s = User.objects.get(pk=7)
+s.delete()
+s.save()

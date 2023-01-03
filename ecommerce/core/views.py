@@ -51,38 +51,38 @@ def add_to_cart(request,pk):
     product= Product.objects.get(pk=pk)
     try:
         customer = request.user.customer
-        # customer = None
         print('found')
     except:
         device = request.COOKIES['device']
         customer, created = Customer.objects.get_or_create(device=device)
         print('not found')
-        
+    
+    
+    order, created = Order.objects.get_or_create(customer=customer, ordered=False)
     order_item, created= OrderItem.objects.get_or_create(
         product= product,
-        customer = customer,
-        ordered= False 
-    )
+        order= order)
+    
     # order_query set
-    order_qs= Order.objects.filter(customer=customer, ordered=False)
-    if order_qs.exists():
-        order= order_qs[0]
-        if order.items.filter(product__pk= pk).exists():
-            order_item.quantity += 1
-            order_item.save()
-            return redirect('product_details',pk=pk)
+    # order_qs= Order.objects.filter(customer=customer, ordered=False)
+    # if order_qs.exists():
+    #     order= order_qs[0]
+    #     if order.items.filter(product__pk= pk).exists():
+    #         order_item.quantity += 1
+    #         order_item.save()
+    #         return redirect('product_details',pk=pk)
         
-        else:
-            order.items.add(order_item)
-            messages.info(request, 'تم إضافة المنتج')
-            return redirect('product_details',pk=pk)
+    #     else:
+    #         order.items.add(order_item)
+    #         messages.info(request, 'تم إضافة المنتج')
+    #         return redirect('product_details',pk=pk)
         
-    else:
-        order_date= timezone.now()
-        order= Order.objects.create(customer= customer, order_date=order_date)
-        order.items.add(order_item)
-        messages.info(request, 'تم إضافة المنتج')
-        return redirect('product_details',pk=pk)
+    # else:
+    #     order_date= timezone.now()
+    #     order= Order.objects.create(customer= customer, order_date=order_date)
+    #     order.items.add(order_item)
+    #     messages.info(request, 'تم إضافة المنتج')
+    return redirect('product_details',pk=pk)
 
 def orderlist(request):
     categories = Category.objects.all()
